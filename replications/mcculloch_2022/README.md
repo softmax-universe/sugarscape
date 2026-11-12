@@ -12,9 +12,21 @@ The author model's MIT license and Mesa's Apache notice remain under `sugarscape
 
 Use the pinned prerequisites from the archived study. Uppercase arguments denote supplied paths or identifiers; output paths must be new.
 
+The analyzer compares the released Mesa model with the unmodified DTL engine.
+Run both engines, then pass their JSONL file, not the output directory:
+
 ```sh
-PYTHONHASHSEED=0 python replications/mcculloch_2022/run.py --engine independent --output NEW_RUN
-python replications/mcculloch_2022/analyze.py NEW_RUN --output NEW_ANALYSIS
+PYTHONHASHSEED=0 python replications/mcculloch_2022/run.py --engine both --reference-seeds 30 --dtl-seeds 30 --output NEW_RUN
+python replications/mcculloch_2022/analyze.py NEW_RUN/runs.jsonl --output NEW_ANALYSIS
+```
+
+This bounded comparison runs 30 seeds per engine for each of three parameter
+settings. The analyzer's non-equivalence qualification refers to Mesa versus DTL;
+it does not describe the independent implementation of the released model.
+Check that implementation separately with the retained complete-world workflow:
+
+```sh
+PYTHONHASHSEED=0 python replications/mcculloch_2022/test_equivalence.py
 ```
 
 ## Historical study and evidence
